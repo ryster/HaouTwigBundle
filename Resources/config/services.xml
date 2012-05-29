@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="haou.twig.class">Twig_Environment</parameter>
+        <parameter key="haou.twig.loader.class">Haou\TwigBundle\Loader\FilestringLoader</parameter>
+    </parameters>
+
+    <services>
+        <service id="haou.twig" class="%haou.twig.class%" public="false">
+            <argument type="service" id="haou.twig.loader" />
+            <argument>%twig.options%</argument>
+        </service>
+
+        <service id="haou.twig.loader" class="%haou.twig.loader.class%" public="false">
+            <argument type="service" id="templating.locator" />
+            <argument type="service" id="templating.name_parser" />
+        </service>
+
+        <service id="haou.templating.engine.twig" class="%templating.engine.twig.class%" public="false">
+            <argument type="service" id="haou.twig" />
+            <argument type="service" id="templating.name_parser" />
+            <argument type="service" id="templating.globals" />
+        </service>
+    </services>
+
+</container>
